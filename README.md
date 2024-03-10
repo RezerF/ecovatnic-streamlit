@@ -5,12 +5,11 @@ ecovatnik-calculator install as dependencies
 ## How to start
 ### Prepare
 ```bash
-git clone 
+git clone https://github.com/RezerF/ecovatnic-streamlit.git
+cd ecovatnic-streamlit
 python3 -m venv venv
 source ./venv/bin/activate
 pip install -r requirements.txt
-playwright install
-pre-commit install
 ```
 ## Run application
 local run:
