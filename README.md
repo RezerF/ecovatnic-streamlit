@@ -32,10 +32,10 @@ application will start on http://0.0.0.0
 
 In demon mod
 ```bash
-docker run -d --rm -p 80:8501 ecovatnik-stramlit-slim:v0.0.1
+docker run -d --rm -p 80:8501 rezerf/ecovatnik-stramlit-slim:v0.0.1
 ```
 
 With options debug
 ```bash
-docker run --rm -p 80:8501 ecovatnik-stramlit-slim:v0.0.1 --logger.level debug --server.headless True
+docker run --rm -p 80:8501 rezerf/ecovatnik-stramlit-slim:v0.0.1 --logger.level debug --server.headless True
 ```
