@@ -65,8 +65,19 @@ data_table = [TableRow(**v).get_row() for _, v in materials_data.items()]
 st.subheader('Материалы:')
 st.dataframe(data_table, width=1000,)
 
+amount_prices = [v["amount_price"] for _, v in materials_data.items()]
+total = sum(amount_prices)
+st.markdown(f"#### Итого материалы:  ___ {total}___ руб.   ")
+st.markdown("    ")
+st.markdown("    ")
+st.markdown("    ")
+
 works_data = common_calc.calculate_dop_work_costs()
 data_table = [TableRow(**v).get_row() for _, v in works_data.items()]
 
 st.subheader('Работы:')
 st.dataframe(data_table, width=1000, use_container_width=True)
+
+amount_prices = [v["amount_price"] for _, v in works_data.items()]
+total = sum(amount_prices)
+st.markdown(f"#### Итого работы:  ___ {total}___ руб.")
