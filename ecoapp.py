@@ -10,19 +10,24 @@ st.write("""
 *Не оферта
 """)
 
-st.sidebar.header('Задайте параметры расчета')
-
-
 def user_input_features():
+    st.sidebar.header("=============Перекрытие=============")
     sq = st.sidebar.number_input("Площадь перекрытия, м2", key='sqr_floor')
-    # sq = st.sidebar.slider('Площадь перекрытия, м2', 10, 500, 100, key='sqr_floor')
     wi = st.sidebar.number_input('Толщина перекрытия, мм', key='width_floor')
-    st.sidebar.radio('Нужна ли подготовка к утеплению?', ["Не нужна/Делаю своими силами", "Нужна"], horizontal=False,
+    st.sidebar.radio('Нужна ли подготовка к утеплению?', ["Не нужна/Делаю своими силами", "Нужна"],
                      key="is_floor_dop_work")
+    st.sidebar.radio('Через прокол?', ["Да", "Нет, насыпь"],
+                     key="is_spine")
+
+    st.sidebar.header("================Стены================")
     sq_wall = st.sidebar.number_input('Площадь стен, м2', key='sqr_wall')
     wi_wall = st.sidebar.number_input('Толщина стен, мм', key='width_wall')
+    # st.sidebar.number_input('Площадь высотой более 3 метров, м2', key='high_three_wall')
+    # st.sidebar.number_input('Площадь высотой более 6 метров, м2', key='high_six_wall')
     st.sidebar.radio('Нужна ли подготовка к утеплению?', ["Не нужна/Делаю своими силами", "Нужна"],
                      key="is_wall_dop_work")
+
+    st.sidebar.header("===============Кровля===============")
     sq_roof = st.sidebar.number_input('Площадь кровли, м2', key='sqr_roof')
     wi_roof = st.sidebar.number_input('Толщина кровли, мм', key='width_roof')
     st.sidebar.radio('Нужна ли подготовка к утеплению?', ["Не нужна/Делаю своими силами", "Нужна"],
@@ -46,6 +51,7 @@ st.table(df)
 
 is_dop_work = lambda dop_work: True if dop_work == "Нужна" else False
 wood_house = lambda is_wood_house: True if is_wood_house == "Дерево" else False
+to_bool_spine = lambda is_spine: True if is_spine == "Да" else False
 
 common_calc = CommonCalculator(
     sqr_floor=st.session_state.sqr_floor,
@@ -58,6 +64,7 @@ common_calc = CommonCalculator(
     is_floor_dop_work=is_dop_work(st.session_state.is_floor_dop_work),
     is_wall_dop_work=is_dop_work(st.session_state.is_wall_dop_work),
     is_roof_dop_work=is_dop_work(st.session_state.is_roof_dop_work),
+    is_spine=to_bool_spine(st.session_state.is_spine),
 )
 materials_data = common_calc.calculate_dop_work_materials()
 data_table = [TableRow(**v).get_row() for _, v in materials_data.items()]
