@@ -12,6 +12,8 @@ st.write("""
 """)
 
 def user_input_features():
+    st.logo("images/android-chrome-192x192.png", link="https://eco-vatnik.ru",)
+
     st.sidebar.header("=======Коэффициент сложности====")
     st.sidebar.slider("Коэф", min_value=1.0, max_value=4.0, step=0.25, key='ratio')
     st.sidebar.header("=============Перекрытие=============")
