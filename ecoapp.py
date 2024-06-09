@@ -13,8 +13,12 @@ st.write("""
 
 def user_input_features():
     st.logo("images/android-chrome-192x192.png", link="https://eco-vatnik.ru",)
+    st.sidebar.header("=========Необходимо учесть==========")
+    st.sidebar.toggle("Строительство лесов", key="build_lesa")
+    st.sidebar.number_input("Демонтаж без утилизации, м2", key='demontaj')
+    st.sidebar.number_input("Пробивание технологических отверстий в ленте, шт", key="destroy_beton")
 
-    st.sidebar.header("=======Коэффициент сложности====")
+    st.sidebar.header("=======Коэффициент сложности======")
     st.sidebar.slider("Коэф", min_value=1.0, max_value=4.0, step=0.25, key='ratio')
     st.sidebar.header("=============Перекрытие=============")
     sq = st.sidebar.number_input("Площадь перекрытия, м2", key='sqr_floor')
@@ -27,8 +31,6 @@ def user_input_features():
     st.sidebar.header("================Стены================")
     sq_wall = st.sidebar.number_input('Площадь стен, м2', key='sqr_wall')
     wi_wall = st.sidebar.number_input('Толщина стен, мм', key='width_wall')
-    # st.sidebar.number_input('Площадь высотой более 3 метров, м2', key='high_three_wall')
-    # st.sidebar.number_input('Площадь высотой более 6 метров, м2', key='high_six_wall')
     st.sidebar.radio('Нужна ли подготовка к утеплению?', ["Не нужна/Делаю своими силами", "Нужна"],
                      key="is_wall_dop_work")
 
@@ -37,7 +39,7 @@ def user_input_features():
     wi_roof = st.sidebar.number_input('Толщина кровли, мм', key='width_roof')
     st.sidebar.radio('Нужна ли подготовка к утеплению?', ["Не нужна/Делаю своими силами", "Нужна"],
                      key="is_roof_dop_work")
-    aaa = st.sidebar.radio('Материал фасада дома', ["Кирпич/Газобетон", "Дерево"], index=1, key="is_wood_house")
+    st.sidebar.radio('Материал фасада дома', ["Кирпич/Газобетон", "Дерево"], index=1, key="is_wood_house")
     data = {'Площадь перекрытия, м2': sq,
             'Толщина перекрытия, мм': wi,
             'Площадь стен, мм': sq_wall,
@@ -70,7 +72,10 @@ common_calc = CommonCalculator(
     is_wall_dop_work=is_dop_work(st.session_state.is_wall_dop_work),
     is_roof_dop_work=is_dop_work(st.session_state.is_roof_dop_work),
     is_spine=to_bool_spine(st.session_state.is_spine),
-    ratio=st.session_state.ratio
+    ratio=st.session_state.ratio,
+    demontaj=st.session_state.demontaj,
+    build_lesa=st.session_state.build_lesa,
+    destroy_beton=st.session_state.destroy_beton,
 )
 materials_data = common_calc.calculate_dop_work_materials()
 data_table = [TableRow(**v).get_row() for _, v in materials_data.items()]
