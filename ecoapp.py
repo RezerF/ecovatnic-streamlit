@@ -38,14 +38,21 @@ if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
 
+# wide mode default
+def wide_space_default():
+    st.set_page_config(layout="wide")
+
+
+wide_space_default()
 st.write("""
 # Калькулятор утепления Эковатой
 
 *Не оферта
 """)
 
+
 def user_input_features():
-    st.logo("images/android-chrome-192x192.png", link="https://eco-vatnik.ru",)
+    st.logo("images/android-chrome-192x192.png", link="https://eco-vatnik.ru", )
     st.sidebar.header("=========Необходимо учесть==========")
     st.sidebar.toggle("Строительство лесов", key="build_lesa")
     st.sidebar.number_input("Демонтаж без утилизации, м2", key='demontaj')
@@ -114,7 +121,7 @@ materials_data = common_calc.calculate_dop_work_materials()
 data_table = [TableRow(**v).get_row() for _, v in materials_data.items()]
 
 st.subheader('Материалы:')
-st.dataframe(data_table, width=1000,)
+st.dataframe(data_table, use_container_width=True)
 
 amount_prices = [v["amount_price"] for _, v in materials_data.items()]
 total_materials = sum(amount_prices)
